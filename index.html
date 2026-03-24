@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Wish Website</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      overflow-x: hidden;
+    }
+
+    .container {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+      padding: 20px;
+      margin-top: 15vh;
+      display: none;
+    }
+
+    .active {
+      display: block;
+      animation: slideInRight 0.5s forwards;
+    }
+
+    .exit-left { animation: slideOutLeft 0.5s forwards; }
+    .exit-right { animation: slideOutRight 0.5s forwards; }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideOutLeft {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(-100%); opacity: 0; }
+    }
+
+    @keyframes slideOutRight {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      background: #4facfe;
+      color: white;
+      margin: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #3a8dde;
+    }
+
+    .gift-box {
+      width: 120px;
+      height: 120px;
+      background: #4facfe;
+      margin: 30px auto;
+      position: relative;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .lid {
+      width: 130px;
+      height: 30px;
+      background: #3a8dde;
+      position: absolute;
+      top: -30px;
+      left: -5px;
+      transition: 0.5s;
+      transform-origin: left bottom;
+    }
+
+    .open .lid {
+      transform: rotate(-120deg);
+    }
+
+    .message {
+      opacity: 0;
+      transition: 1s;
+      color: #222;
+      font-weight: bold;
+    }
+
+    .show {
+      opacity: 1;
+    }
+
+    .letter {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      color: black;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .bear-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: floatUp 3s infinite;
+      pointer-events: none;
+    }
+
+    .h1 { left: 22%; top: 22%; animation-delay: 0s; }
+    .h2 { left: 35%; top: 10%; animation-delay: 0.6s; }
+    .h3 { left: 48%; top: 18%; animation-delay: 1.2s; }
+    .h4 { left: 60%; top: 8%; animation-delay: 1.8s; }
+    .h5 { left: 72%; top: 22%; animation-delay: 2.4s; }
+    .h6 { left: 18%; top: 48%; animation-delay: 0.9s; }
+    .h7 { left: 78%; top: 48%; animation-delay: 1.5s; }
+    .h8 { left: 50%; top: 38%; animation-delay: 2.1s; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(20px); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-80px); opacity: 0; }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .sparkle-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 16px;
+      opacity: 0;
+      animation: sparkleFloat 4s linear infinite;
+    }
+
+    @keyframes sparkleFloat {
+      0% { transform: translateY(20px) scale(0.6); opacity: 0; }
+      25% { opacity: 1; }
+      100% { transform: translateY(-120px) scale(1.2); opacity: 0; }
+    }
+
+    .audio-box {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 20px;
+      display: inline-block;
+      backdrop-filter: blur(6px);
+    }
+
+    audio {
+      width: 320px;
+      max-width: 90%;
+    }
+
+    .audio-text {
+      color: white;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="confetti"></canvas>
+
+  <div class="container active" id="page1">
+    <h1>🎂 Happy Birthday LOML🎉</h1>
+    <p style="color:#333; font-size:14px; margin-top:8px;">
+      To my handsome love 💖, you make my world brighter every day. I'm so lucky to have you 🥰
+    </p>
+
+    <div class="bear-wrapper" style="margin-top:20px;">
+      <img src="https://media.tenor.com/hIN5byg2BczAAAAC/bear-hug.gif" alt="Cute bear hug" style="width:180px; border-radius:15px;">
+      <div class="heart h1">💖</div>
+      <div class="heart h2">💗</div>
+      <div class="heart h3">💘</div>
+      <div class="heart h4">💕</div>
+      <div class="heart h5">💞</div>
+      <div class="heart h6">❤️</div>
+      <div class="heart h7">💓</div>
+      <div class="heart h8">💝</div>
+    </div>
+
+    <div class="sparkle-layer" id="sparkleLayer"></div>
+
+    <p style="color:white;">A little love just for you 💞</p>
+    <button onclick="goPage('page1','page2','right')">Celebrate 🎊</button>
+  </div>
+
+  <div class="container" id="page2">
+    <h1>Try this surprise gift Mr.Handsome 💖</h1>
+    <button onclick="goPage('page2','page3','right')">1st Surprising Gift for today 🎁</button>
+    <button onclick="goPage('page2','page4','right')">Loving Birthday Wish from Lavii 💌</button>
+  </div>
+
+  <div class="container" id="page3">
+    <h1>🎁 Tap to Open</h1>
+    <div class="gift-box" onclick="openGift(this)">
+      <div class="lid"></div>
+    </div>
+    <div class="message" id="msg">💖 I love you so much 💖</div>
+    <button onclick="goPage('page3','page2','left')">⬅ Back</button>
+  </div>
+
+  <div class="container" id="page4">
+    <h1>💌My love, you mean everything to me </h1>
+    <div class="letter">
+      <p>"To the man who holds my heart in his hands: Happy Birthday. Looking back at everything we’ve been through, I am so incredibly proud of the man you are and the man you are becoming. You have a way of making life feel lighter and brighter just by being in it. Thank you for being my constant in a world that’s always changing, for listening to my silent thoughts, and for loving me in a way I never thought possible. Today, I celebrate you—not just for your birthday, but for the beautiful impact you have on everyone around you. Here’s to a lifetime more of 'us.'" ❤️</p>
+    </div>
+    <button onclick="goPage('page4','page6','right')">Next 💕</button>
+    <button onclick="goPage('page4','page2','left')">⬅ Back</button>
+  </div>
+
+  <div class="container" id="page5">
+    <h1>🎵 A Special Audio For You 💖</h1>
+    <div class="audio-box">
+      <p class="audio-text">Tap play and listen with love 💕</p>
+      <audio controls autoplay>
+        <source src="your-audio-file-path.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+    <br><br>
+    <button onclick="goPage('page5','page6','right')">Next 💕</button>
+    <button onclick="goPage('page5','page2','left')">⬅ Back</button>
+  </div>
+
+  <div class="container" id="page6">
+    <h1>💖 One More Thing 💖</h1>
+    <div class="letter">
+      <p>Life is so much sweeter with you in it. Cheers to another year of making memories, chasing dreams, and loving you more than yesterday.</p>
+    </div>
+    <button onclick="goPage('page6','page2','left')">⬅ Back</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let confetti = [];
+    let currentType = 0;
+
+    const colorsArray = [
+      ['#ff0000', '#ffae00', '#ffff00'],
+      ['#00ff00', '#00ffff', '#0080ff'],
+      ['#ff00ff', '#ff80ff', '#8000ff'],
+      ['#ffffff', '#cccccc', '#888888'],
+      ['#ff6699', '#ff99cc', '#ffd1e8'],
+      ['#ff4d6d', '#ff8fab', '#ffc2d1']
+    ];
+
+    function createConfetti() {
+      const colorSet = colorsArray[currentType];
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: 5 + Math.random() * 5,
+        color: colorSet[Math.floor(Math.random() * colorSet.length)]
+      };
+    }
+
+    function initConfetti() {
+      confetti = [];
+      if (currentType === 0) return;
+      for (let i = 0; i < 150; i++) {
+        confetti.push(createConfetti());
+      }
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(c => {
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x, c.y, c.r, c.r);
+        c.y += 2;
+        if (c.y > canvas.height) c.y = -c.r;
+      });
+      requestAnimationFrame(drawConfetti);
+    }
+
+    function goPage(fromId, toId, direction) {
+      const pageMap = { page1: 0, page2: 1, page3: 2, page4: 3, page5: 4, page6: 5 };
+      currentType = pageMap[toId];
+      initConfetti();
+
+      const from = document.getElementById(fromId);
+      const to = document.getElementById(toId);
+      const exitAnim = direction === 'right' ? 'exit-left' : 'exit-right';
+      const enterAnim = direction === 'right' ? 'slideInRight' : 'slideInLeft';
+
+      from.classList.remove('active');
+      from.classList.add(exitAnim);
+
+      setTimeout(() => {
+        from.classList.remove(exitAnim);
+        from.style.display = 'none';
+
+        to.style.display = 'block';
+        to.style.animation = enterAnim + ' 0.5s forwards';
+        to.classList.add('active');
+      }, 500);
+    }
+
+    function openGift(box) {
+      box.classList.add('open');
+      setTimeout(() => {
+        goPage('page3', 'page5', 'right');
+      }, 800);
+    }
+
+    function createSparkles() {
+      const sparkleLayer = document.getElementById('sparkleLayer');
+      if (!sparkleLayer) return;
+
+      sparkleLayer.innerHTML = '';
+      const sparkleIcons = ['✨', '💖', '💗', '💕', '💞'];
+
+      for (let i = 0; i < 24; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.textContent = sparkleIcons[Math.floor(Math.random() * sparkleIcons.length)];
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = (55 + Math.random() * 35) + '%';
+        s.style.animationDelay = Math.random() * 4 + 's';
+        s.style.animationDuration = 3 + Math.random() * 3 + 's';
+        sparkleLayer.appendChild(s);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initConfetti();
+    });
+
+    initConfetti();
+    drawConfetti();
+    createSparkles();
+  </script>
+
+</body>
+</html>
